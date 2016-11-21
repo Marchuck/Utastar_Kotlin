@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="rxkotlinfx-0.3.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/rxkotlinfx-0.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/tornadofx-1.5.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
