@@ -1,15 +1,16 @@
-package uta
+package gui
 
 /**
  * @author Lukasz
- * @since 21.11.2016.
+ * @since 22.11.2016.
  */
+
 class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals: DoubleArray) {
 
-    constructor() : this(doubleArrayOf(0.0), emptyArray<DoubleArray>(), intArrayOf(1), doubleArrayOf(1.0))
+//    constructor() : this(DoubleArray(0), emptyArray(), IntArray(0), DoubleArray(0))
 
     var mbaseSize: Int = 0
-    var msolution: DoubleArray = doubleArrayOf(0.0)
+    var msolution: DoubleArray = DoubleArray(6)
     var mvarsNumb: Int = 0
     var mprofit: Double = 0.toDouble()
     var mstepNumb: Int = 0
@@ -81,8 +82,8 @@ class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals:
             var Zj = 0.0
             if (isVarBlocked(j) == 0) {
                 for (i in 0..mbaseSize - 1) {
-                    val base_vector_i = mbaseVector[i]
-                    Zj += malphaTbl[i][j] * mmultipliers[base_vector_i]
+                    val `var` = mbaseVector[i]
+                    Zj = Zj + malphaTbl[i][j] * mmultipliers[`var`]
                 }
                 mlimitProfits[j] = mmultipliers[j] - Zj
             }
@@ -90,48 +91,50 @@ class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals:
         return mlimitProfits
     }
 
-    fun isOptimal(): Boolean {
-        var optimal = true
+    val isOptimal: Boolean
+        get() {
+            var optimal = true
 
-        var j = 0
-        while (j < mvarsNumb) {
-            if (isVarBlocked(j) == 0) {
-                if (mlimitProfits[j] > 0) {
-                    optimal = false
-                    j = mvarsNumb + 1
-                }
-            }
-            j++
-        }
-        return optimal
-    }
-
-    fun isFinite(): Boolean {
-        var finite = false
-
-        var j = 0
-        while (j < mvarsNumb) {
-            if (isVarBlocked(j) == 0) {
-                if (mlimitProfits[j] > 0) {
-                    var positive = false
-                    var i = 0
-                    while (i < mbaseSize) {
-                        if (malphaTbl[i][j] > 0) {
-                            positive = true
-                            i = mbaseSize + 1
-                        }
-                        i++
-                    }
-                    if (positive == false) {
-                        finite = true
+            var j = 0
+            while (j < mvarsNumb) {
+                if (isVarBlocked(j) == 0) {
+                    if (mlimitProfits[j] > 0) {
+                        optimal = false
                         j = mvarsNumb + 1
                     }
                 }
+                j++
             }
-            j++
+            return optimal
         }
-        return finite
-    }
+
+    val isFinite: Boolean
+        get() {
+            var finite = false
+
+            var j = 0
+            while (j < mvarsNumb) {
+                if (isVarBlocked(j) == 0) {
+                    if (mlimitProfits[j] > 0) {
+                        var positive = false
+                        var i = 0
+                        while (i < mbaseSize) {
+                            if (malphaTbl[i][j] > 0) {
+                                positive = true
+                                i = mbaseSize + 1
+                            }
+                            i++
+                        }
+                        if (positive == false) {
+                            finite = true
+                            j = mvarsNumb + 1
+                        }
+                    }
+                }
+                j++
+            }
+            return finite
+        }
 
     fun findVarIn() {
         var tmp = 0.0
@@ -200,7 +203,7 @@ class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals:
     fun findSolution(): DoubleArray {
         calcLimitProfits()
         while (true) {
-            if (isOptimal() || isFinite()) {
+            if (isOptimal || isFinite) {
                 break
             } else {
                 findVarIn()
@@ -213,4 +216,5 @@ class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals:
         }
         return solution()
     }
+
 }

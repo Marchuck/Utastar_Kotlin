@@ -30,14 +30,14 @@ class DataContainer {
     }
 
     fun rows(): Int {
-        return mdata!!.size
+        return mdata.size
     }
 
     fun columns(): Int {
-        if (mdata!!.size == 0) {
+        if (mdata.size == 0) {
             return 0
         }
-        return mdata!!.first.size()
+        return mdata.first.size()
     }
 
     @Throws(IOException::class, UtaException::class)
@@ -120,7 +120,7 @@ class DataContainer {
                         // this is a row with the data
                         val dataMod = DataModel()
                         dataMod.importData(labels, directions, line)
-                        mdata!!.add(dataMod)
+                        mdata.add(dataMod)
                         // get new line
                         break
                     }
@@ -131,10 +131,10 @@ class DataContainer {
             line = dataFile.readLine()
         }
 
-        if (mdata!!.size <= 0) {
+        if (mdata.size <= 0) {
             throw UtaException("Data file is empty")
         }
-        if (mdata!!.first.params().size <= 0) {
+        if (mdata.first.params().size <= 0) {
             throw UtaException("No parameters?")
         }
     }
@@ -142,11 +142,11 @@ class DataContainer {
     override fun toString(): String {
         var str = ""
         var row = 1
-        for (dataMod in mdata!!) {
+        for (dataMod in mdata) {
             str += "\t" + Integer.toString(row++) + ") " + dataMod + "\n"
         }
         return str
     }
 
-    private var mdata: LinkedList<DataModel>? = null
+    private var mdata: LinkedList<DataModel> = LinkedList<DataModel>()
 }

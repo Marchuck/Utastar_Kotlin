@@ -10,12 +10,13 @@ import java.util.*
  * @since 21 lis 2016.
  * 18 : 30
  */
-class DataModel {
+class DataModel() {
 
-    constructor() {
+    private var mparams: LinkedList<DataParam>
+
+    init {
         mparams = LinkedList<DataParam>()
     }
-
     /**
      * Parse string with values of data and associate those values
      * to names provided in the first param.
@@ -37,13 +38,13 @@ class DataModel {
                 continue
             }
 
-            if ((Character.isWhitespace(c) || c == '|') && strNumb.length > 0) {
+            if ((Character.isWhitespace(c) || c == '|') && strNumb.isNotEmpty()) {
                 add(names[paramNumb], strNumb, directions[paramNumb++])
                 strNumb = ""
             }
         }
 
-        if (strNumb.length > 0) {
+        if (strNumb.isNotEmpty()) {
             add(names[paramNumb], strNumb, directions[paramNumb++])
         }
     }
@@ -70,6 +71,4 @@ class DataModel {
         // get rid of the last ','
         return str.substring(0, str.length - 2)
     }
-
-    private var mparams: LinkedList<DataParam>
 }

@@ -8,6 +8,7 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        UtaApp().main(args)
+        ControllerApp().main(args)
     }
+
 }
