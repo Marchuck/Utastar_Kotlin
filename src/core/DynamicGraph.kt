@@ -4,6 +4,12 @@ import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
 import javafx.scene.layout.GridPane
 import tornadofx.*
+import uta.Utastar
+import uta.utaModel.DataContainer
+import java.io.BufferedReader
+import java.io.FileReader
+
+
 /**
  * Utastar_Kotlin
  *
@@ -17,15 +23,8 @@ class DynamicGraph : View("graph") {
     override val root = GridPane()
 
     init {
-        with (root) {
-            for(xd in 1..4) row() {
-                piechart ("Imported Fruits") {
-                    data("Grapefruit", 12.0)
-                    data("Oranges", 25.0)
-                    data("Plums", 10.0)
-                    data("Pears", 22.0)
-                    data("Apples", 30.0)
-                }
+        with(root) {
+            row {
                 barchart("Stock Monitoring, 2010", CategoryAxis(), NumberAxis()) {
                     series("Portfolio 1") {
                         data("Jan", 23)
@@ -38,18 +37,7 @@ class DynamicGraph : View("graph") {
                         data("Mar", 27)
                     }
                 }
-                stackedbarchart("Stock again", CategoryAxis(), NumberAxis()) {
-                    series("Portfolio 1") {
-                        data("Jan", 23)
-                        data("Feb", 14)
-                        data("Mar", 15)
-                    }
-                    series("Portfolio 2") {
-                        data("Jan", 11)
-                        data("Feb", 19)
-                        data("Mar", 27)
-                    }
-                }
+
                 linechart("linechart", CategoryAxis(), NumberAxis()) {
                     series("month") {
                         data("jan", 10)
@@ -62,6 +50,32 @@ class DynamicGraph : View("graph") {
                     }
                 }
             }
+            vbox {
+                button("open input data") {
+                    isDefaultButton = true
+
+                    setOnAction {
+//                        val fileChooser = FileChooser()
+//                        val file = fileChooser.showOpenDialog()
+                        val filePath = "data.txt"
+                        val mData = filePath
+                                .map { FileReader(filePath) }
+                                .map(::BufferedReader)
+                                .map(::DataContainer)
+                                .map { dataContainer -> refreshGraph(dataContainer) }
+
+
+                    }
+
+                }
+
+            }
         }
+    }
+
+    fun refreshGraph(dataContainer: DataContainer): Unit {
+        val scoring = Utastar.optimize(dataContainer)
+        val data = dataContainer.data()
+        //todo: draw results!
     }
 }

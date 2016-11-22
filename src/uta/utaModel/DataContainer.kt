@@ -21,6 +21,9 @@ class DataContainer {
     constructor(data: LinkedList<DataModel>) {
         mdata = data
     }
+    constructor(buffer: BufferedReader) {
+        importFromFile(buffer)
+    }
 
     fun data(): LinkedList<DataModel> {
         return mdata ?: LinkedList<DataModel>()
@@ -34,7 +37,7 @@ class DataContainer {
         if (mdata!!.size == 0) {
             return 0
         }
-        return mdata!!.getFirst().size()
+        return mdata!!.first.size()
     }
 
     @Throws(IOException::class, UtaException::class)
@@ -131,7 +134,7 @@ class DataContainer {
         if (mdata!!.size <= 0) {
             throw UtaException("Data file is empty")
         }
-        if (mdata!!.getFirst().params().size <= 0) {
+        if (mdata!!.first.params().size <= 0) {
             throw UtaException("No parameters?")
         }
     }
