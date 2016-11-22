@@ -26,9 +26,13 @@ class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref
         mcritWeight = DoubleArray(mcritNumb)
         mcritScale = BooleanArray(mcritNumb)
 
-        val list = ArrayList<DoubleArray>()
-        for (jot in 0..mcritNumb) list.add(Array<DoubleArray>())
+        val list = ArrayList<Array<DoubleArray>>()
+        for (jot in 0..mcritNumb-1) {
+            val arr = arrayOf(doubleArrayOf(0.0))
+            list.add(arr)
+        }
         mlimits = list.toTypedArray()
+
         for (i in 0..mcritNumb - 1) {
             mlimits[i] = Array(limits[i].size) { DoubleArray(2) }
         }
@@ -45,5 +49,4 @@ class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref
         }
         System.arraycopy(pref, 0, maltPreference, 0, maltNumb)
     }
-
 }
