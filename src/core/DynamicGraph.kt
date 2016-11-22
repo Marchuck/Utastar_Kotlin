@@ -3,6 +3,7 @@ package core
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
 import javafx.scene.layout.GridPane
+import javafx.stage.FileChooser
 import tornadofx.*
 import uta.Utastar
 import uta.utaModel.DataContainer
@@ -55,11 +56,11 @@ class DynamicGraph : View("graph") {
                     isDefaultButton = true
 
                     setOnAction {
-//                        val fileChooser = FileChooser()
-//                        val file = fileChooser.showOpenDialog()
-                        val filePath = "data.txt"
-                        val mData = filePath
-                                .map { FileReader(filePath) }
+                        val fileChooser = FileChooser();
+                        val file = fileChooser.showOpenDialog(primaryStage)
+
+                        file.absolutePath
+                                .map { FileReader(file.absolutePath) }
                                 .map(::BufferedReader)
                                 .map(::DataContainer)
                                 .map { dataContainer -> refreshGraph(dataContainer) }
@@ -73,9 +74,10 @@ class DynamicGraph : View("graph") {
         }
     }
 
-    fun refreshGraph(dataContainer: DataContainer): Unit {
+    fun refreshGraph(dataContainer: DataContainer) {
         val scoring = Utastar.optimize(dataContainer)
         val data = dataContainer.data()
         //todo: draw results!
+
     }
 }
