@@ -21,14 +21,14 @@ class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref
     var maltPreference: IntArray
 
     init {
+
         mcritNumb = crit.size
         maltNumb = crit[0].size
         mcritWeight = DoubleArray(mcritNumb)
         mcritScale = BooleanArray(mcritNumb)
 
-        val list = ArrayList<DoubleArray>()
-        for (jot in 0..mcritNumb) list.add(Array<DoubleArray>())
-        mlimits = list.toTypedArray()
+        mlimits = allocate2DArray(mcritNumb)
+
         for (i in 0..mcritNumb - 1) {
             mlimits[i] = Array(limits[i].size) { DoubleArray(2) }
         }
@@ -45,5 +45,22 @@ class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref
         }
         System.arraycopy(pref, 0, maltPreference, 0, maltNumb)
     }
+
+    private fun allocate2DArray(mcritNumb: Int): Array<Array<DoubleArray>> {
+
+        val arr = ArrayList<Array<DoubleArray>>()
+        for (j in 0..mcritNumb - 1) {
+
+            val nested_arr = ArrayList<DoubleArray>()
+
+            for (j in 0..mcritNumb - 1) {
+                nested_arr.add(doubleArrayOf(0.0))
+            }
+            arr.add(nested_arr.toTypedArray())
+        }
+        return arr.toTypedArray()
+    }
+
+
 
 }
