@@ -1,16 +1,12 @@
-package uta
+package gui
 
 import java.util.*
 
 /**
- * Utastar_Kotlin
- *
- * @author Lukasz Marczak
- *
- * @since 21 lis 2016.
- * 18 : 41
+ * @author Lukasz
+ * @since 22.11.2016.
  */
-class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref: IntArray) {
+class MultiTbl {
 
     var mlimits: Array<Array<DoubleArray>>
     var mcritScale: BooleanArray
@@ -20,18 +16,13 @@ class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref
     var mcritWeight: DoubleArray
     var maltPreference: IntArray
 
-    init {
+    constructor(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref: IntArray) {
         mcritNumb = crit.size
         maltNumb = crit[0].size
         mcritWeight = DoubleArray(mcritNumb)
         mcritScale = BooleanArray(mcritNumb)
 
-        val list = ArrayList<Array<DoubleArray>>()
-        for (jot in 0..mcritNumb-1) {
-            val arr = arrayOf(doubleArrayOf(0.0))
-            list.add(arr)
-        }
-        mlimits = list.toTypedArray()
+        mlimits = allocArray(mcritNumb)
 
         for (i in 0..mcritNumb - 1) {
             mlimits[i] = Array(limits[i].size) { DoubleArray(2) }
@@ -48,5 +39,13 @@ class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref
             System.arraycopy(crit[i], 0, mgradeTable[i], 0, maltNumb)
         }
         System.arraycopy(pref, 0, maltPreference, 0, maltNumb)
+    }
+
+    private fun allocArray(size: Int): Array<Array<DoubleArray>> {
+        val array = ArrayList<Array<DoubleArray>>()
+        for (j in 0..size){
+            array.add(emptyArray())
+        }
+        return array.toTypedArray()
     }
 }

@@ -18,23 +18,23 @@ class DataParam {
         moptDir = OptimizationDirection.MAX
     }
 
-    constructor(name: String, `val`: Double, optdir: OptimizationDirection) {
+    constructor(name: String, _val: Double, optdir: OptimizationDirection) {
         mname = name
-        mval = `val`
+        mval = _val
         moptDir = optdir
     }
 
-    constructor(`val`: Double, optDir: OptimizationDirection) {
-        mval = `val`
+    constructor(_val: Double, optDir: OptimizationDirection) {
+        mval = _val
         moptDir = optDir
     }
 
-    fun `val`(): Double {
+    fun _val(): Double {
         return mval
     }
 
-    fun setVal(`val`: Double) {
-        mval = `val`
+    fun setVal(_val: Double) {
+        mval = _val
     }
 
     fun name(): String {

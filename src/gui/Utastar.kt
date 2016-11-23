@@ -1,6 +1,6 @@
-package uta
+package gui
 
-import core.UtaApp
+import core.ControllerApp
 import uta.utaModel.DataContainer
 import uta.utaModel.DataParam
 import java.util.logging.Level
@@ -9,15 +9,7 @@ import java.util.logging.Level
  * @author Lukasz
  * @since 22.11.2016.
  */
-object Utastar {
-
-    /**
-     * Find most optimal solutions among data.
-
-     * @param data
-     * *
-     * @return Couple of most optimal results
-     */
+object Utastar{
     fun optimize(data: DataContainer): DoubleArray {
         val dt = data.data()
         //temporaly creating table for algorithm
@@ -31,12 +23,12 @@ object Utastar {
         for (i in 0..rows - 1) {
             for (j in 0..cols - 1 - 1) {
                 val prm = dt[i].params()[j]
-                alternatives[j][i] = prm.`val`()
-                if (prm.optDir() == DataParam.OptimizationDirection.MIN) {
+                alternatives[j][i] = prm._val()
+                if (prm.optDir()==(DataParam.OptimizationDirection.MIN)) {
                     alternatives[j][i] = -alternatives[j][i]
                 }
             }
-            p[i] = dt[i].params().last.`val`() as Int
+            p[i] = dt[i].params().last._val().toInt()
         }
 
         // run utastar calculations
@@ -76,7 +68,7 @@ object Utastar {
         }
         dbgStr += "]"
 
-        UtaApp.mlog.log(Level.INFO, dbgStr)
+        ControllerApp.mlog.log(Level.INFO, dbgStr)
         // END debug info
 
         return utela
