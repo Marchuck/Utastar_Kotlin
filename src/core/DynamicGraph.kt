@@ -34,28 +34,31 @@ class DynamicGraph(override val constructors: Collection<KFunction<UIComponent>>
         return 0
     }
 
-    var scoring: DoubleArray = doubleArrayOf(0.0)
-    var dataContainer: DataContainer? = null
+    companion object{
+        var scoring = doubleArrayOf(0.0)
 
-    constructor(scoring: DoubleArray, dataContainer: DataContainer) : this(
-            emptyList(), emptyList(), emptyList(), null, "hi", "", emptyList()) {
+    }
 
-        this.scoring = scoring
-        this.dataContainer = dataContainer
+
+    constructor(_scoring: DoubleArray) : this(
+            emptyList(), emptyList(), emptyList(), null, "UtaStar", "UtaStar", emptyList()) {
+
+        scoring = _scoring
     }
 
     override val root = GridPane()
 
     init {
+
         with(root) {
             row {
                 barchart("Utastar", CategoryAxis(), NumberAxis()) {
                     series("Utastar alternatives scoring") {
-                        for (j in 0..scoring.size)
-                            data("Property ", scoring[j])
+                        for (j in 0..scoring.size - 1) {
+                            data("property ".plus(j), scoring[j])
+                        }
                     }
                 }
-
             }
         }
     }

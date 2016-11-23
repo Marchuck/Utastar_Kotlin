@@ -11,16 +11,16 @@ import java.util.logging.Logger
  * @since 21 lis 2016.
  * 17 : 47
  */
-class ControllerApp : tornadofx.App() {
-
-    companion object {
-        var mlog = Logger.getLogger("Ulog")
-    }
+class App : tornadofx.App() {
 
     override val primaryView = MainGui::class
 
+    companion object {
+        val mlog = Logger.getLogger("Ulog")
 
-    fun main(args: Array<String>) {
-        Application.launch(ControllerApp::class.java, *args)
+        @JvmStatic
+        fun main(args: Array<String>) {
+            Application.launch(App::class.java, *args)
+        }
     }
 }

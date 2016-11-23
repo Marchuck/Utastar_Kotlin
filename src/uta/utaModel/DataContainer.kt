@@ -26,7 +26,7 @@ class DataContainer {
     }
 
     fun data(): LinkedList<DataModel> {
-        return mdata ?: LinkedList<DataModel>()
+        return mdata
     }
 
     fun rows(): Int {

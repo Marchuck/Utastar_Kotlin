@@ -1,6 +1,6 @@
 package gui
 
-import core.ControllerApp
+import core.App
 import uta.utaModel.DataContainer
 import uta.utaModel.DataParam
 import java.util.logging.Level
@@ -68,7 +68,7 @@ object Utastar{
         }
         dbgStr += "]"
 
-        ControllerApp.mlog.log(Level.INFO, dbgStr)
+        App.mlog.log(Level.INFO, dbgStr)
         // END debug info
 
         return utela

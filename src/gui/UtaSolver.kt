@@ -1,6 +1,6 @@
 package gui
 
-import core.ControllerApp
+import core.App
 import java.util.logging.Level
 
 /**
@@ -100,7 +100,7 @@ class UtaSolver(tbl: MultiTbl) {
                 dbgStr += "\n[" + k + "] " + mvalFuncsOfU[i][k][0] + ", " + mvalFuncsOfU[i][k][1] + ", " + mvalFuncsOfU[i][k][2]
             }
         }
-        ControllerApp.mlog.log(Level.INFO, dbgStr)
+        App.mlog.log(Level.INFO, dbgStr)
     }
 
     fun valFuncsOfW() {
@@ -140,7 +140,7 @@ class UtaSolver(tbl: MultiTbl) {
                 dbgStr = dbgStr.substring(0, dbgStr.length - 2)
             }
         }
-        ControllerApp.mlog.log(Level.INFO, dbgStr)
+        App.mlog.log(Level.INFO, dbgStr)
     }
 
     fun deltaValFuncs() {
@@ -176,7 +176,7 @@ class UtaSolver(tbl: MultiTbl) {
                 dbgStr = dbgStr.substring(0, dbgStr.length - 2)
             }
         }
-        ControllerApp.mlog.log(Level.INFO, dbgStr)
+        App.mlog.log(Level.INFO, dbgStr)
     }
 
     fun simplexTbl() {

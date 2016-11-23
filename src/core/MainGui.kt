@@ -23,8 +23,8 @@ import java.util.logging.Level
  */
 
 class MainGui : View("Uta Star") {
-    override val root = GridPane()
 
+    override val root = GridPane()
 
     init {
         Platform.setImplicitExit(false)
@@ -36,6 +36,7 @@ class MainGui : View("Uta Star") {
                     isDefaultButton = true
 
                     setOnAction {
+
                         val fileChooser = FileChooser();
                         val file = fileChooser.showOpenDialog(primaryStage)
 
@@ -43,31 +44,21 @@ class MainGui : View("Uta Star") {
                                 .map { FileReader(file.absolutePath) }
                                 .map(::BufferedReader)
                                 .map(::DataContainer)
-                                .map { dataContainer ->
-                                    ControllerApp.mlog.log(Level.FINE, "refresh graph")
-                                    val scoring = Utastar.optimize(dataContainer)
-                                    //val viewToAdd = DynamicGraph(scoring, dataContainer)
-                                    val pane = GridPane()
-                                    with(pane){
-                                        barchart("Utastar", CategoryAxis(), NumberAxis()) {
-                                            series("Utastar alternatives scoring") {
-                                                for (j in 0..scoring.size-1)
-                                                    data("Property " + j.toString(), scoring[j])
-                                            }
+                                .map { dataContainer -> Utastar.optimize(dataContainer) }
+                                .map {
+                                    scoring ->
+                                    Platform.runLater {
+                                        val resultsGraph = DynamicGraph(scoring)
+                                        if (FX.primaryStage.scene.root != resultsGraph.root) {
+                                            FX.primaryStage.scene.root = resultsGraph.root
+                                            FX.primaryStage.sizeToScene()
+                                            FX.primaryStage.centerOnScreen()
                                         }
                                     }
-
-
-
-                                    // UtaStarGraphApp(scoring, dataContainer).main(arrayOf(""))
                                 }
                     }
                 }
             }
-            row {
-
-            }
-
         }
     }
 }

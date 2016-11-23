@@ -10,10 +10,6 @@ package core
  */
 class UtaException : Exception {
 
-    constructor() {
-
-    }
-
     constructor(s: String) {
         Exception(s)
     }
