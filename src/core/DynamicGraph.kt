@@ -65,7 +65,6 @@ class DynamicGraph : View("graph") {
                                 .map(::DataContainer)
                                 .map { dataContainer -> refreshGraph(dataContainer) }
 
-
                     }
 
                 }

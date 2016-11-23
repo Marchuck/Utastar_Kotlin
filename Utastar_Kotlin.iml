@@ -10,5 +10,7 @@
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="rxkotlinfx-0.3.0" level="project" />
     <orderEntry type="library" name="rxkotlin-0.60.0" level="project" />
+    <orderEntry type="library" name="javafx-osgi-8.0" level="project" />
+    <orderEntry type="library" name="kotlin-osgi-bundle-1.0.3" level="project" />
   </component>
 </module>
