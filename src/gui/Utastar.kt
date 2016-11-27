@@ -13,7 +13,37 @@ object Utastar{
     fun optimize(data: DataContainer): DoubleArray {
         val dt = data.data()
         //temporaly creating table for algorithm
-        val criteria = arrayOf(arrayOf(doubleArrayOf(100.0, 0.0), doubleArrayOf(2500.0, 0.0), doubleArrayOf(5000.0, 0.0)), arrayOf(doubleArrayOf(0.1, 0.0), doubleArrayOf(0.55, 0.0), doubleArrayOf(1.0, 0.0)), arrayOf(doubleArrayOf(1.0, 0.0), doubleArrayOf(5.0, 0.0), doubleArrayOf(10.0, 0.0)), arrayOf(doubleArrayOf(0.1, 0.0), doubleArrayOf(0.55, 0.0), doubleArrayOf(1.0, 0.0)), arrayOf(doubleArrayOf(-10.0, 0.0), doubleArrayOf(-5.0, 0.0), doubleArrayOf(-1.0, 0.0)), arrayOf(doubleArrayOf(0.1, 0.0), doubleArrayOf(0.55, 0.0), doubleArrayOf(1.0, 0.0)))
+        val criteria = arrayOf(
+                arrayOf(
+                        doubleArrayOf(100.0, 0.0),
+                        doubleArrayOf(2500.0, 0.0),
+                        doubleArrayOf(5000.0, 0.0)
+                ),
+                arrayOf(
+                        doubleArrayOf(0.1, 0.0),
+                        doubleArrayOf(0.55, 0.0),
+                        doubleArrayOf(1.0, 0.0)
+                ),
+                arrayOf(
+                        doubleArrayOf(1.0, 0.0),
+                        doubleArrayOf(5.0, 0.0),
+                        doubleArrayOf(10.0, 0.0)
+                ),
+                arrayOf(doubleArrayOf(0.1, 0.0),
+                        doubleArrayOf(0.55, 0.0),
+                        doubleArrayOf(1.0, 0.0)
+                ),
+                arrayOf(
+                        doubleArrayOf(-10.0, 0.0),
+                        doubleArrayOf(-5.0, 0.0),
+                        doubleArrayOf(-1.0, 0.0)
+                ),
+                arrayOf(
+                        doubleArrayOf(0.1, 0.0),
+                        doubleArrayOf(0.55, 0.0),
+                        doubleArrayOf(1.0, 0.0)
+                )
+        )
         val rows = data.rows()
         val cols = data.columns()
         val alternatives = Array(cols - 1) { DoubleArray(rows) }
@@ -33,8 +63,8 @@ object Utastar{
 
         // run utastar calculations
         val MultiTable = MultiTbl(criteria, alternatives, p)
-        val ProjectX = UtaSolver(MultiTable)
-        var uted = ProjectX.UtaSolve(0.00001)
+        val solver = UtaSolver(MultiTable)
+        var uted = solver.UtaSolve(0.00001)
 
         // BEGIN debug info
         var i: Int
@@ -49,7 +79,7 @@ object Utastar{
         }
         dbgStr += "]"
 
-        uted = ProjectX.marginalValFuncs()
+        uted = solver.marginalValFuncs()
         dbgStr += "\n\n marginalValueFunctions: [\n"
         i = 0
         while (i < uted.size) {
@@ -61,7 +91,7 @@ object Utastar{
         }
         dbgStr += "]"
 
-        val utela = ProjectX.altScoring()
+        val utela = solver.altScoring()
         dbgStr += "\n\n alternativeScoring: ["
         for (t in utela.indices) {
             dbgStr += " " + utela[t]
@@ -70,7 +100,6 @@ object Utastar{
 
         App.mlog.log(Level.INFO, dbgStr)
         // END debug info
-
         return utela
     }
 }

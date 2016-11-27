@@ -14,6 +14,7 @@ import java.util.*
  * 18 : 29
  */
 class DataContainer {
+
     constructor() {
         mdata = LinkedList<DataModel>()
     }
@@ -21,6 +22,7 @@ class DataContainer {
     constructor(data: LinkedList<DataModel>) {
         mdata = data
     }
+
     constructor(buffer: BufferedReader) {
         importFromFile(buffer)
     }
@@ -40,6 +42,10 @@ class DataContainer {
         return mdata.first.size()
     }
 
+    companion object{
+        val labels = LinkedList<String>()
+    }
+
     @Throws(IOException::class, UtaException::class)
     fun importFromFile(dataFile: BufferedReader) {
         // Lines which start with '#' are ignored
@@ -48,11 +54,10 @@ class DataContainer {
         // Values are separated by '|', whitespaces are ignored unless they are part of a label
 
         var line: String? = dataFile.readLine()
-        val labels = LinkedList<String>()
         val directions = LinkedList<DataParam.OptimizationDirection>()
         while (line != null) {
             // ignore empty lines
-            if (line.length >= 1) {
+            if (line.isNotEmpty()) {
                 var pos = 0
                 while (pos < line.length) {
                     var c = line[pos]
@@ -83,7 +88,7 @@ class DataContainer {
                             }
                             ++pos
                         }
-                        if (strDir.length > 0) {
+                        if (strDir.isNotEmpty()) {
                             directions.add(DataParam.OptimizationDirection.valueOf(strDir))
                         }
                         // get new line
@@ -104,7 +109,7 @@ class DataContainer {
                             }
                             ++pos
                         }
-                        if (label.length > 0) {
+                        if (label.isNotEmpty()) {
                             labels.add(label)
                         }
                         // get new line
@@ -137,6 +142,7 @@ class DataContainer {
         if (mdata.first.params().size <= 0) {
             throw UtaException("No parameters?")
         }
+        dataFile.close()
     }
 
     override fun toString(): String {

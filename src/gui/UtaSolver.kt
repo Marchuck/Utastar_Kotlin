@@ -24,6 +24,12 @@ class UtaSolver(tbl: MultiTbl) {
     private var mthreashold: Double
     private var maltScoring = DoubleArray(6)
 
+    init {
+        mcritNumb = mdata.mcritNumb
+        maltNumb = mdata.maltNumb
+        mthreashold = 0.05
+    }
+
     fun marginalValFuncs(): Array<DoubleArray> {
         return mmargValFuncs
     }
@@ -109,7 +115,6 @@ class UtaSolver(tbl: MultiTbl) {
 
         for (j in 0..maltNumb - 1) {
             for (i in 0..mcritNumb - 1) {
-                oneliner("S".plus(i))
                 mvalFuncsOfW[j][i] = DoubleArray(mdata.mlimits[i].size - 1)
                 for (k in 0..mvalFuncsOfW[j][i].size - 1) {
                     mvalFuncsOfW[j][i][k] = 0.0
@@ -386,13 +391,9 @@ class UtaSolver(tbl: MultiTbl) {
 
     fun UtaSolve(e: Double): Array<DoubleArray> {
         valFuncsOfU()
-        oneliner("U")
         valFuncsOfW()
-        oneliner("W")
         deltaValFuncs()
-        oneliner("V")
         simplexTbl()
-        oneliner("T")
         maverageWeight = Array<DoubleArray>(mcritNumb) { DoubleArray(100) }
 //        maverageWeight = arrayOfNulls<DoubleArray>(mcritNumb)
         mmargValFuncs = Array<DoubleArray>(mcritNumb) { DoubleArray(100) }
@@ -464,14 +465,4 @@ class UtaSolver(tbl: MultiTbl) {
         return maverageWeight!!
     }
 
-    private fun oneliner(s: String) {
-        for (j in 0..100) print(s)
-        println()
-    }
-
-    init {
-        mcritNumb = mdata.mcritNumb
-        maltNumb = mdata.maltNumb
-        mthreashold = 0.05
-    }
 }

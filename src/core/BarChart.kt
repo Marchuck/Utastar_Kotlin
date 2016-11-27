@@ -19,13 +19,13 @@ import kotlin.reflect.KFunction
  * 17 : 48
  */
 
-class DynamicGraph(override val constructors: Collection<KFunction<UIComponent>>,
-                   override val members: Collection<KCallable<*>>,
-                   override val nestedClasses: Collection<KClass<*>>,
-                   override val objectInstance: UIComponent?,
-                   override val qualifiedName: String?,
-                   override val simpleName: String?,
-                   override val annotations: List<Annotation>) : View(""), KClass<UIComponent> {
+class BarChart(override val constructors: Collection<KFunction<UIComponent>>,
+               override val members: Collection<KCallable<*>>,
+               override val nestedClasses: Collection<KClass<*>>,
+               override val objectInstance: UIComponent?,
+               override val qualifiedName: String?,
+               override val simpleName: String?,
+               override val annotations: List<Annotation>) : View(""), KClass<UIComponent> {
     override fun equals(other: Any?): Boolean {
         return true
     }
@@ -55,7 +55,7 @@ class DynamicGraph(override val constructors: Collection<KFunction<UIComponent>>
                 barchart("Utastar", CategoryAxis(), NumberAxis()) {
                     series("Utastar alternatives scoring") {
                         for (j in 0..scoring.size - 1) {
-                            data("property ".plus(j), scoring[j])
+                            data(DataContainer.labels[j], scoring[j])
                         }
                     }
                 }

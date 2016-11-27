@@ -6,7 +6,7 @@ import java.util.*
  * @author Lukasz
  * @since 22.11.2016.
  */
-class MultiTbl {
+class MultiTbl(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref: IntArray) {
 
     var mlimits: Array<Array<DoubleArray>>
     var mcritScale: BooleanArray
@@ -16,13 +16,12 @@ class MultiTbl {
     var mcritWeight: DoubleArray
     var maltPreference: IntArray
 
-    constructor(limits: Array<Array<DoubleArray>>, crit: Array<DoubleArray>, pref: IntArray) {
+    init {
         mcritNumb = crit.size
         maltNumb = crit[0].size
         mcritWeight = DoubleArray(mcritNumb)
         mcritScale = BooleanArray(mcritNumb)
-
-        mlimits = allocArray(mcritNumb)
+        mlimits = double2DArray(mcritNumb)
 
         for (i in 0..mcritNumb - 1) {
             mlimits[i] = Array(limits[i].size) { DoubleArray(2) }
@@ -40,8 +39,7 @@ class MultiTbl {
         }
         System.arraycopy(pref, 0, maltPreference, 0, maltNumb)
     }
-
-    private fun allocArray(size: Int): Array<Array<DoubleArray>> {
+    private fun double2DArray(size: Int): Array<Array<DoubleArray>> {
         val array = ArrayList<Array<DoubleArray>>()
         for (j in 0..size){
             array.add(emptyArray())

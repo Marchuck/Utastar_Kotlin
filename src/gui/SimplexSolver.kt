@@ -7,8 +7,6 @@ package gui
 
 class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals: DoubleArray) {
 
-//    constructor() : this(DoubleArray(0), emptyArray(), IntArray(0), DoubleArray(0))
-
     var mbaseSize: Int = 0
     var msolution: DoubleArray = DoubleArray(6)
     var mvarsNumb: Int = 0
@@ -82,8 +80,8 @@ class SimplexSolver(ofm: DoubleArray, a: Array<DoubleArray>, b: IntArray, bVals:
             var Zj = 0.0
             if (isVarBlocked(j) == 0) {
                 for (i in 0..mbaseSize - 1) {
-                    val `var` = mbaseVector[i]
-                    Zj = Zj + malphaTbl[i][j] * mmultipliers[`var`]
+                    val _var = mbaseVector[i]
+                    Zj += malphaTbl[i][j] * mmultipliers[_var]
                 }
                 mlimitProfits[j] = mmultipliers[j] - Zj
             }

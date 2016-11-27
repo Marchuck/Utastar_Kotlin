@@ -32,12 +32,12 @@ class MainGui : View("Uta Star") {
         with(root) {
 
             row {
-                button("load data") {
+                button("Wczytaj dane") {
 
                     setOnAction {
 
                         val fileChooser = FileChooser()
-                        val file = fileChooser.showOpenDialog(primaryStage)
+                        val file = fileChooser.showOpenDialog(primaryStage) ?: return@setOnAction
 
                         file.absolutePath
                                 .map { FileReader(file.absolutePath) }
@@ -47,7 +47,7 @@ class MainGui : View("Uta Star") {
                                 .map {
                                     scoring ->
                                     Platform.runLater {
-                                        val resultsGraph = DynamicGraph(scoring)
+                                        val resultsGraph = BarChart(scoring)
                                         if (FX.primaryStage.scene.root != resultsGraph.root) {
                                             FX.primaryStage.scene.root = resultsGraph.root
                                             FX.primaryStage.sizeToScene()
