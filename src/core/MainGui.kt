@@ -2,15 +2,15 @@ package core
 
 import gui.Utastar
 import javafx.application.Platform
-import javafx.scene.chart.CategoryAxis
-import javafx.scene.chart.NumberAxis
 import javafx.scene.layout.GridPane
 import javafx.stage.FileChooser
-import tornadofx.*
+import tornadofx.FX
+import tornadofx.View
+import tornadofx.button
+import tornadofx.row
 import uta.utaModel.DataContainer
 import java.io.BufferedReader
 import java.io.FileReader
-import java.util.logging.Level
 
 
 /**
@@ -33,11 +33,10 @@ class MainGui : View("Uta Star") {
 
             row {
                 button("load data") {
-                    isDefaultButton = true
 
                     setOnAction {
 
-                        val fileChooser = FileChooser();
+                        val fileChooser = FileChooser()
                         val file = fileChooser.showOpenDialog(primaryStage)
 
                         file.absolutePath
